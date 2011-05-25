@@ -30,7 +30,7 @@ if ( $cache = $tpl->cache('page', $expire_time = $cache_in_seconds) ) {
     );
     $results = ThinkupQuery($args);
     
-    if ($results->error or count($results) == 0) {
+    if (isset($results->error) or count($results) == 0) {
         exit("Sorry, I couldn't find your archives in ThinkUp. Please check your username in config.inc.php settings and try again.");
     }
     $first_tweet = array_shift($results);
@@ -224,7 +224,6 @@ function AlchemyQuery($text) {
     $format = 'json'; // May depend of your application context
     
     $args = array(
-        'method'=> $method,
         'apikey'=> $GLOBALS['alchemy_api_key'],
         'text'=> $text,
         'outputMode'=> $format,
@@ -258,7 +257,7 @@ function AlchemyQuery($text) {
         $error = "Problem reading data from ".$url.", ".$php_errormsg;
     }
 
-    if ($error) {
+    if (isset($error)) {
         print $error;
         return $error;
     }
